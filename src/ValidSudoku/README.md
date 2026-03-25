@@ -12,7 +12,7 @@ Note: A board does not need to be full or be solvable to be valid.
 
 ### Example 1:
 
-![Sudoku image](sudoku_example.tiff)
+![Sudoku image](sudoku_example.png)
 
 ```
 Input: board =
