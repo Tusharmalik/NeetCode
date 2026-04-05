@@ -1,37 +1,37 @@
 package main
 
 import (
-	"reflect"
+	"slices"
 	"sort"
 	"testing"
 )
 
 func TestGroupAnagrams(t *testing.T) {
 	tests := []struct {
-		name string
-		strs []string
-		want [][]string
+		name  string
+		input []string
+		want  [][]string
 	}{
 		{
-			name: "Test Case 1",
-			strs: []string{"eat", "tea", "tan", "ate", "nat", "bat"},
-			want: [][]string{{"eat", "tea", "ate"}, {"tan", "nat"}, {"bat"}},
+			name:  "Test Case 1",
+			input: []string{"eat", "tea", "tan", "ate", "nat", "bat"},
+			want:  [][]string{{"eat", "tea", "ate"}, {"tan", "nat"}, {"bat"}},
 		},
 		{
-			name: "Test Case 2",
-			strs: []string{"act", "pots", "tops", "cat", "stop", "hat"},
-			want: [][]string{{"act", "cat"}, {"pots", "stop", "tops"}, {"hat"}},
+			name:  "Test Case 2",
+			input: []string{"act", "pots", "tops", "cat", "stop", "hat"},
+			want:  [][]string{{"act", "cat"}, {"pots", "stop", "tops"}, {"hat"}},
 		},
 		{
-			name: "Test Case 3",
-			strs: []string{"abct", "cat"},
-			want: [][]string{{"cat"}, {"abct"}},
+			name:  "Test Case 3",
+			input: []string{"abct", "cat"},
+			want:  [][]string{{"cat"}, {"abct"}},
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := groupAnagrams(tt.strs)
+			got := groupAnagrams(tt.input)
 			AssertCorrectMessage(t, got, tt.want)
 		})
 	}
@@ -82,7 +82,9 @@ func AssertCorrectMessage(t testing.TB, got, want [][]string) {
 	sortOuter(got)
 	sortOuter(want)
 
-	if !reflect.DeepEqual(got, want) {
+	if !slices.EqualFunc(got, want, func(s1, s2 []string) bool {
+		return slices.Equal(s1, s2)
+	}) {
 		t.Errorf("got %q, want %q", got, want)
 	}
 }
