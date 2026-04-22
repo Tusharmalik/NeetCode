@@ -52,6 +52,13 @@ func TestPermutationString(t *testing.T) {
 				t.Errorf("got %v, want %v", got, tt.want)
 			}
 		})
+
+		t.Run(tt.name+" Sliding Window Hash Map", func(t *testing.T) {
+			got := checkInclusionSlidingWindowHashMap(tt.sting1, tt.sting2)
+			if got != tt.want {
+				t.Errorf("got %v, want %v", got, tt.want)
+			}
+		})
 	}
 }
 
@@ -69,6 +76,12 @@ func BenchmarkCheckInclusion(b *testing.B) {
 		b.ResetTimer()
 		for b.Loop() {
 			checkInclusionSlidingWindow(sting1, sting2)
+		}
+	})
+	b.Run("Sliding Window Hash Map", func(b *testing.B) {
+		b.ResetTimer()
+		for b.Loop() {
+			checkInclusionSlidingWindowHashMap(sting1, sting2)
 		}
 	})
 }
